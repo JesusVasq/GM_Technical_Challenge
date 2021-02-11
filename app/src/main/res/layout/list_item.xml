@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="message"
+        android:textSize="20dp"
         android:id="@+id/messageView"
         />
     <TextView
@@ -23,6 +24,11 @@
         android:layout_height="wrap_content"
         android:text="author"
         android:id="@+id/authorView"
+        android:gravity="right"
         />
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#C0C0C0" />
 
 </LinearLayout>

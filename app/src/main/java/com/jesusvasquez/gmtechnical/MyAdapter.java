@@ -43,9 +43,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     /**
      * Initialize the dataset of the Adapter.
-     *
-     * @param dataSet String[] containing the data to populate views to be used
-     * by RecyclerView.
      */
     public MyAdapter(ArrayList<Commit> dataSet) {
         localDataSet = dataSet;
