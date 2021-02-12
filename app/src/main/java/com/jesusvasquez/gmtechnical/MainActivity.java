@@ -27,32 +27,40 @@ public class MainActivity extends AppCompatActivity {
 
     final static String TAG = "GM_Challenge";
     final static String PUBLIC_REPO = "https://api.github.com/repos/GeekyAnts/NativeBase/commits";
-
-    MyAdapter myAdapter;
-    ArrayList<Commit> myCommits = new ArrayList<Commit>();
+    final static String MY_REPO = "https://api.github.com/repos/JesusVasq/GM_Technical_Challenge/commits?sha=develop&per_page=50";
+    // Views
     RecyclerView recyclerView;
     ProgressBar progressBar;
+    // Data Structs
+    MyAdapter myAdapter;
+    ArrayList<Commit> myCommits = new ArrayList<Commit>();
+    // Network Singleton
+    RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // init views
         progressBar = findViewById(R.id.progress_circle);
+        // init network singleton
+        requestQueue = RequestSingleton.getInstance(this.getApplicationContext()).getRequestQueue();
         // Set up Recycler view
-
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         recyclerView = findViewById(R.id.commit_list);
         recyclerView.setLayoutManager(mLayoutManager);
         myAdapter = new MyAdapter(myCommits);
         recyclerView.setAdapter(myAdapter);
+        // Make view invisible while network request completes
         recyclerView.setVisibility(View.GONE);
+        // async call to github API
         fetchCommits();
     }
 
     public void fetchCommits() {
         Log.d(TAG,"Fetching commits...");
 
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        //RequestQueue requestQueue = Volley.newRequestQueue(this);
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, PUBLIC_REPO, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -91,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(TAG,"API call failed: " + error.getMessage());
             }
         });
-
-        requestQueue.add(jsonArrayRequest);
+        this.requestQueue.add(jsonArrayRequest);
     }
 }
