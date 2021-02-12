@@ -54,14 +54,14 @@ public class MainActivity extends AppCompatActivity {
         // Make view invisible while network request completes
         recyclerView.setVisibility(View.GONE);
         // async call to github API
-        fetchCommits();
+        fetchCommits(PUBLIC_REPO);
     }
 
-    public void fetchCommits() {
+    public void fetchCommits(String url) {
         Log.d(TAG,"Fetching commits...");
 
         //RequestQueue requestQueue = Volley.newRequestQueue(this);
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, PUBLIC_REPO, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 try {
